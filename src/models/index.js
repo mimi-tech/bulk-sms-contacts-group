@@ -4,7 +4,7 @@ const {
   } = require("../configs");
   
   module.exports = {
-    ContactGroup: require("./Contact")(sequelize),
+    ContactGroup: require("./contact")(sequelize),
     
   };
 
