@@ -1,0 +1,159 @@
+paths:
+  /get-group-contact-by-authId:
+    get:
+      tags:
+        - VIEW  GROUP CONTACT # Value of the tag
+      summary: GET ALL CONTACT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: query
+          name: authId
+          type: string
+          default: a5970193-826b-4163-ad34-c2edc2f2187a
+          required: true
+      responses:
+        200:
+          description: should return user group contacts      
+    
+
+
+  /remove-a-contact:
+    put:
+      tags:
+        - REMOVE A CONTACT # Value of the tag
+      summary: REMOVE A USER CONTACT.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name:   remove-a-contact # name of request, can be any name
+          description: It enables users contact to be removed
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/removeContact"
+
+
+      responses:
+        200:
+          description: should return contact deleted successfully
+
+
+ 
+  /add-group-contact:
+    post:
+      tags:
+        - ADD CONTACT GROUP # Value of the tag
+      summary: FOR GETTING DETAILS OF THE CONTACT GROUP.
+      produces:
+        - application/json
+      parameters:
+
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body # request body
+          name: add-group-contact # name of request, can be any name
+          description: It enables users to add contact
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/contactGroup"
+      responses: # server responses
+        201:
+          description: should return contact added successful
+
+
+
+  /delete-group-contact:
+    delete:
+      tags:
+        - DELETE A CONTACT GROUP BY ID # Value of the tag
+      summary: DELETE USER CONTACT GROUP.
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-
+        - in: body # request body
+          name:   delete-group-contact # name of request, can be any name
+          description: It enables users contact to be deleted
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/deleteContact" 
+
+      responses: # server responses
+        200:
+          description: should return contact added successful           
+
+
+definitions: # Schema definition for request body
+  
+
+
+  contactGroup:
+    type: object
+    properties:
+      authId:
+          type: string
+          default: miriam@gmail.com
+     
+
+      contact:
+          type: array
+          default: ["+23493483439","+23493483948"]
+
+      contactName:
+          type: string
+          default: CMO     
+
+  
+
+ 
+  deleteContact:
+    type: object
+    properties:
+      authId:
+        type: string
+        default: 6c02428b-2fc4-4cc2-b923-c045401f84bf 
+
+      id:
+        type: string
+        default: 6c02428b-2fc4-4cc2-b923-c045401f84bf   
+
+
+     
+
+
+
+  removeContact:
+    type: object
+    properties:
+      authId:
+        type: string
+        default: 6c02428b-2fc4-4cc2-b923-c045401f84bf       
+
+      contact:
+        type: string
+        default: +23487485784              
+
+     
+     
+           
+
