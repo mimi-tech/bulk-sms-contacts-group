@@ -24,7 +24,7 @@ paths:
     
 
 
-  /remove-a-contact:
+  /delete-a-contact-by-authId:
     put:
       tags:
         - REMOVE A CONTACT # Value of the tag
@@ -133,9 +133,9 @@ definitions: # Schema definition for request body
         type: string
         default: 6c02428b-2fc4-4cc2-b923-c045401f84bf 
 
-      id:
+      contactName:
         type: string
-        default: 6c02428b-2fc4-4cc2-b923-c045401f84bf   
+        default: ANYTHING  
 
 
      
@@ -151,7 +151,12 @@ definitions: # Schema definition for request body
 
       contact:
         type: string
-        default: +23487485784              
+        default: +23487485784   
+
+
+      contactName:
+        type: string
+        default: 'Everything'                  
 
      
      

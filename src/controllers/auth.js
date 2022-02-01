@@ -25,6 +25,11 @@ const welcomeText = async (req, res) => {
     return response(res, data);
   };
 
+  const removeAContactFromGroup = async (req, res) => {
+    const data = await auth.removeAContactFromGroup(req.form);
+    return response(res, data);
+  };
+
 
  
   module.exports = {
@@ -32,6 +37,7 @@ const welcomeText = async (req, res) => {
   
     addGroupContact,
     deleteGroupContact,
-    getGroupContactByAuthId
+    getGroupContactByAuthId,
+    removeAContactFromGroup
     
 }

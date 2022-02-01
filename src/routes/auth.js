@@ -14,6 +14,8 @@ routes.delete("/delete-group-contact",validate(validator.deleteGroupContact), au
 
 routes.get("/get-group-contact-by-authId",validate(validator.getGroupContactByAuthId), auth.getGroupContactByAuthId);
 
+routes.put("/delete-a-contact-by-authId",validate(validator.removeAContactFromGroup), auth.removeAContactFromGroup);
+
 
 
 module.exports = routes; 
