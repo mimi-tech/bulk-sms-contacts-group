@@ -11,13 +11,20 @@ module.exports = {
 
   deleteGroupContact: {
     authId: Joi.string().uuid().required(),
-    id: Joi.string().required()
+    contactName: Joi.string().required()
   },
 
   
   getGroupContactByAuthId: {
     authId: Joi.string().uuid().required(),
     
+  },
+  removeAContactFromGroup: {
+    authId: Joi.string().uuid().required(),
+    contactName: Joi.string().uppercase({ force: true }).required(),
+    contact: Joi.string().required()
+
+
   },
 
 
