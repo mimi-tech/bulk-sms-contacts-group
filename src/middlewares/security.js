@@ -8,6 +8,7 @@ const nonRestrictedEndPoints = [
 "/", 
 "/add-group-contact",
 "/get-group-contact-by-authId",
+
 ];
 
 //creates list of authorized endpoints
