@@ -72,7 +72,7 @@ const welcomeText = async () => {
            let uniqueChars = [...new Set(newArray)];
 
 
-          await ContactGroup.update({
+           const newContact = await ContactGroup.update({
                  contacts: uniqueChars
                },{
                 where: {
@@ -82,13 +82,20 @@ const welcomeText = async () => {
                     ] 
                 },
                })
+
+               if(newContact){
                return {
                    status: true,
                    message: "contact updated successfully",
                    data:uniqueChars
                };
             
-           
+            }
+            return {
+                status: false,
+                message: "Error adding contact",
+                data:uniqueChars
+            };
 
         }
 
@@ -103,7 +110,7 @@ const welcomeText = async () => {
               })
 
               return {
-                status: false,
+                status: true,
                 message: "contact added successfully",
                 data:newContact
             };
@@ -111,7 +118,6 @@ const welcomeText = async () => {
 
 
     } catch (error) {
-        console.error(error)
         return {
             status: false,
             message: constants.SERVER_ERROR("adding contact"),
