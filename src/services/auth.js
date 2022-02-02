@@ -162,7 +162,7 @@ const welcomeText = async () => {
             where: {
                 [and]: [
                 {authId:authId},
-                {id:id},
+                {contactName:contactName},
                 ] 
             },
         })
