@@ -6,13 +6,13 @@ const { auth } = require("../services");
 //creates a list of non restricted endpoints
 const nonRestrictedEndPoints = [
 "/", 
-
-
+"/add-group-contact",
+"/get-group-contact-by-authId",
 ];
 
 //creates list of authorized endpoints
 const restrictedEndPoints = [
-  "/add-group-contact",
+  
   "/delete-group-contact",
   "/get-group-contact-by-authId",
   "/delete-a-contact-by-authId",
