@@ -11,7 +11,7 @@ module.exports = {
 
   deleteGroupContact: {
     authId: Joi.string().uuid().required(),
-    contactName: Joi.string().required()
+    contactName: Joi.string().uppercase({ force: true }).required()
   },
 
   
