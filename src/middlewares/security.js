@@ -9,6 +9,12 @@ const nonRestrictedEndPoints = [
 "/add-group-contact",
 "/get-group-contact-by-authId",
 "/delete-group-contact",
+"/add-products",
+"/view-all-products",
+"/view-products-by-type",
+"/like-products",
+"/rate-products",
+"/delete-products"
 ];
 
 //creates list of authorized endpoints

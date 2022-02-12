@@ -5,6 +5,7 @@ const {
   
   module.exports = {
     ContactGroup: require("./contact")(sequelize),
+    Products: require("./products")(sequelize),
     
   };
 
