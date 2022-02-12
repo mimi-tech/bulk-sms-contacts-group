@@ -100,7 +100,152 @@ paths:
 
       responses: # server responses
         200:
-          description: should return contact added successful           
+          description: should return contact added successful     
+
+
+
+
+  /add-products:
+    post:
+      tags: # Tag property
+        - PRODUCTS # Value of the tag
+      summary: FOR ADDING PRODUCTS.
+      produces:
+        - application/json
+      parameters:
+
+        - in: body # request body
+          name: add-PRODUCTS # name of request, can be any name
+          description: It enables users to add products
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/userProducts"
+      responses: # server responses
+        201:
+          description: should return product added successful
+
+
+
+
+
+
+  /view-all-products:
+    get:
+      tags:
+        - PRODUCTS # Value of the tag
+      summary: GET ALL PRODUCTS.
+      produces:
+        - application/json
+      parameters:
+       
+        - in: query
+          name: page
+          type: number
+          default: 1
+          required: true
+      responses:
+        200:
+          description: should return all products
+
+
+
+
+  /delete-products:
+    delete:
+      tags:
+        - PRODUCTS # Value of the tag
+      summary: DELETE USER PRODUCT.
+      produces:
+        - application/json
+      parameters:
+       
+        - in: body # request body
+          name:   delete-product # name of request, can be any name
+          description: It enables users product to be deleted
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/deleteProducts"
+
+
+      responses:
+        200:
+          description: should return product deleted successfully
+
+
+  /view-products-by-type:
+    get:
+      tags:
+        - PRODUCTS # Value of the tag
+      summary: GET PRODUCT BY ID.
+      produces:
+        - application/json
+      parameters:
+       
+        - in: query
+          name: page
+          type: number
+          default: 1
+          required: true
+
+
+        - in: query
+          name: productType
+          type: string
+          default: Books
+          required: true
+
+
+      responses:
+        200:
+          description: should return product successfully
+
+
+
+  /like-products:
+    put:
+      tags:
+        - PRODUCTS # Value of the tag
+      summary: LIKE PRODUCT BY ID.
+      produces:
+        - application/json
+      parameters:
+       
+        - in: body # request body
+          name:   like-products # name of request, can be any name
+          description: It enables users contact to be removed
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/likeProducts"
+
+
+      responses:
+        200:
+          description: should return product successfully
+
+
+
+  /rate-products:
+    put:
+      tags:
+        - PRODUCTS # Value of the tag
+      summary: RATE PRODUCT BY ID.
+      produces:
+        - application/json
+      parameters:
+       
+        - in: body # request body
+          name:   rate-products # name of request, can be any name
+          description: It enables users products to be rated
+          required: true # can also be true depending on user preference
+          schema: # Schema definition
+            $ref: "#/definitions/rateProducts"
+
+
+      responses:
+        200:
+          description: should return product successfully
+
+
 
 
 definitions: # Schema definition for request body
@@ -156,7 +301,95 @@ definitions: # Schema definition for request body
 
       contactName:
         type: string
-        default: 'Everything'                  
+        default: 'Everything'    
+
+
+
+  userProducts:
+    type: object
+    properties:
+      productId:
+          type: string
+          default: 387238-23i23-323u40-4uuhu-2837
+     
+
+      productName:
+          type: string
+          default: Shoe
+
+
+      productType:
+          type: string
+          default: Shoe
+
+      productImageUrl:
+          type: string
+          default: Shoe     
+ 
+      productSize:
+          type: string
+          default: Shoe
+
+      productRate:
+          type: number
+          default: 1.0
+
+      productLike:
+          type: number
+          default: 0    
+
+
+      productOwnerId:
+          type: string
+          default: Shoe  
+          
+      productOwnerFirstName:
+          type: string
+          default: Shoe      
+
+
+      productOwnerLastName:
+          type: string
+          default: Shoe   
+
+
+      productStock:
+          type: string
+          default: Shoe 
+
+      dateAdded:
+          type: string
+          default: Shoe                
+
+  
+
+ 
+  
+
+  deleteAccount:
+    type: object
+    properties:
+      productId:
+        type: string
+        default: 6c02428b-2fc4-4cc2-b923-c045401f84bf       
+
+
+
+  likeProducts:
+    type: object
+    properties:
+      productId:
+        type: string
+        default: 6c02428b-2fc4-4cc2-b923-c045401f84bf     
+
+
+
+  rateProducts:
+    type: object
+    properties:
+      productId:
+        type: string
+        default: 6c02428b-2fc4-4cc2-b923-c045401f84bf                        
 
      
      

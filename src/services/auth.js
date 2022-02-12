@@ -8,6 +8,7 @@ const {
 
 const { constants } = require("../configs");
 const { ContactGroup } = require("../models")
+const { Products } = require("../models")
 
 
 
@@ -285,12 +286,298 @@ const welcomeText = async () => {
 
 
 
+/**
+ * for adding products
+ * @param {Object} params email, password, username, profileImageUrl.
+ * @returns {Promise<Object>} Contains status, and returns data and message 
+ */
+
+ const addProducts = async (params) => {
+    try {
+console.log(new Date());
+        const { 
+             
+            productImageUrl,
+             productName,
+             productType,
+             productSize,
+             productStock,
+             productOwnerFirstName,
+             productOwnerLastName,
+             productOwnerId,
+             productPrice
+
+            } = params;
+
+  //add the product
+  const newProducts = await Products.create({
+    productId: uuid(),
+    productImageUrl: productImageUrl,
+    productName: productName,
+    productType:productType,
+    productSize:productSize,
+    productStock:productStock,
+    productOwnerFirstName:productOwnerFirstName,
+    productOwnerLastName:productOwnerLastName,
+    productOwnerId:productOwnerId,
+    dateAdded:new Date().toDateString(),
+    productRate:1.0,
+    productLike:0,
+    productPrice:productPrice
+      })
+
+      return {
+        status: true,
+        message: "Product added successfully",
+        data:newProducts
+    };
+
+} catch (e) {
+    console.log(e);
+    return {
+        status: false,
+        message: constants.SERVER_ERROR("Adding a product"),
+    };
+}
+ }
+
+/**
+ * for fetching all products
+ * @param {Object} params  No params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message 
+ */
+ const viewProductsByType = async (params) => {
+    try {
+
+        const { page, productType } = params;
+
+        const pageCount = 15;
+
+        const allProducts = await Products.findAll({
+
+            where: {productType:productType},
+            attributes: {
+                exclude: [
+                    "createdAt",
+                   
+                    
+                ],
+            },
+            limit: pageCount,
+            offset: pageCount * (page - 1),
+        });
+
+
+        return {
+            status: true,
+            data: allProducts
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            status: false,
+            message: constants.SERVER_ERROR("ALL Products by type"),
+        };
+    }
+}
+
+
+
+
+/**
+ * for fetching all products by type
+ * @param {Object} params  No params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message 
+ */
+ const viewAllProducts = async (params) => {
+    try {
+
+        const { page } = params;
+
+        const pageCount = 15;
+
+        const allProducts = await Products.findAll({
+
+
+            attributes: {
+                exclude: [
+                    "createdAt",
+                   
+                    
+                ],
+            },
+            limit: pageCount,
+            offset: pageCount * (page - 1),
+        });
+
+
+        return {
+            status: true,
+            data: allProducts
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            status: false,
+            message: constants.SERVER_ERROR("ALL Products"),
+        };
+    }
+}
+
+
+
+
+
+
+
+/**
+ * for liking products
+ * @param {Object} params  No params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message 
+ */
+ const likeProducts = async (params) => {
+    try {
+
+        const { productId } = params;
+
+       //check if the product is already existing
+       const isProduct = await Products.findOne({
+        where: {productId:productId },
+    })
+
+      if(!isProduct){
+        return {
+            status: false,
+            message: "Sorry this product does not exist",
+        };
+      }
+      let likeCount = isProduct.dataValues.productLike;
+        await Products.update({
+            productLike: likeCount + 1
+          },{
+            where: {productId:productId },
+          })
+
+        return {
+            status: true,
+            message: "like count updated successfully"
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            status: false,
+            message: constants.SERVER_ERROR("ALL Products"),
+        };
+    }
+}
+
+
+/**
+ * for rating products
+ * @param {Object} params  No params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message 
+ */
+ const rateProducts = async (params) => {
+    try {
+
+        const { productId, rate } = params;
+
+       //check if the product is already existing
+       const isProduct = await Products.findOne({
+        where: {productId:productId },
+    })
+
+      if(!isProduct){
+        return {
+            status: false,
+            message: "Sorry this product does not exist",
+        };
+      }
+      let rateCount = isProduct.dataValues.productRate * rate /2;
+        await Products.update({
+            productRate: rateCount
+          },{
+            where: {productId:productId },
+          })
+
+        return {
+            status: true,
+            message: "Rate count updated successfully"
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            status: false,
+            message: constants.SERVER_ERROR("ALL Products"),
+        };
+    }
+}
+
+
+/**
+ * for deleting product
+ * @param {Object} params  user id {authId} params needed.
+ * @returns {Promise<Object>} Contains status, and returns data and message 
+ */
+
+ const deleteProducts= async (params) => {
+    try {
+        const { productId, productOwnerId } = params
+
+        //check if the user is already existing
+        const user = await Products.findOne({
+            where: {
+                [and]: [
+                {productId:productId},
+                {productOwnerId:productOwnerId},
+                ] 
+            },
+        })
+
+        if (!user) {
+            return {
+                status: false,
+                message: "Sorry this is not your product"
+            };
+        }
+
+
+
+        //go ahead and delete the account
+        await Products.destroy({
+            where: {
+                [and]: [
+                    {productId:productId},
+                    {productOwnerId:productOwnerId},
+                ] 
+            },
+        })
+
+        return {
+            status: true,
+            message: "product deleted successfully"
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            status: false,
+            message: constants.SERVER_ERROR("DELETING contact group"),
+        };
+    }
+}
+
 
 module.exports = {
     welcomeText,
     addGroupContact,
     deleteGroupContact,
     getGroupContactByAuthId,
-    removeAContactFromGroup
+    removeAContactFromGroup,
+    addProducts,
+    viewAllProducts,
+    viewProductsByType,
+    likeProducts,
+    rateProducts,
+    deleteProducts
    
 }
